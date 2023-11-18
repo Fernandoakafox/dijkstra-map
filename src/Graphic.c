@@ -48,12 +48,12 @@ void plot_pixel(FILE *file, int y, int x, int r, int g, int b, int pixel_data_of
  * saida   : alteração da cor de uma linha de pixels       *
  ************************************************/
 
-void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int b, int pixel_data_offset) {
+void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int b){
     FILE *file; // Ponteiro para o tipo FILE chamado file, que será usado para manipular o arquivo.
-    file = fopen("mapa_unisc.bmp", "rb+"); // Abre o arquivo BMP em modo de leitura e escrita binária
+    file = fopen("../images/mapa_unisc.bmp", "rb+"); // Abre o arquivo BMP em modo de leitura e escrita binária
     if (file == NULL) {
         perror("Erro ao abrir arquivo\n");
-        return 1;
+        return;
     }
 
     unsigned char header[54]; //array de 54 bytes que será usado para armazenar o cabeçalho do arquivo BMP
@@ -93,5 +93,4 @@ void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int
     }
     // Fecha o arquivo
     fclose(file);
-    return 0;
 }

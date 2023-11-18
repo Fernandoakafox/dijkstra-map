@@ -1,31 +1,11 @@
 #include "../include/GraphTools.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #define INFINITO 9999
 
-/***********************************************/
-/* Definição do Registro e da Estrutura        */
-/***********************************************/
-struct NODO {
-    int vertice;
-    int distancia; // Em metros ou pixels
-    struct NODO * prox;
-};
 
-struct PONTO{
-    int x;
-    int y;
-};
-
-struct GRAFO {
-    int *dist; // Vetor para armazenar a distancia do vertice em relação ao ponto de partida
-    int *ant;  // Vetor para armazenar o vertice anterior
-    int numVertices;
-    int *visitado;
-    struct PONTO *coordenadas; // Vetor de estruturas, para armazenar as coordenadas dos vertices
-    struct NODO ** adjListas; // Para um array bidimensional dinâmico usamos **. Da mesma forma, usamos struct nodo** para armazenar um array para uma lista encadeada.
-};
 
 
 /***********************************************/
@@ -153,4 +133,52 @@ int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1) {
     int distancia;
     distancia = sqrt((pow((x1 - x0), 2)) + pow((y1 - y0), 2)); //formula da distancia entre dois pontos
     return distancia;
+}
+
+/*****************************************************************************************
+ * dijsktra                                                            *
+ * objetivo:                                        *
+ * entrada : grafo, vertice de partida, vertice de destino                               *
+ * saída   :      *
+ *****************************************************************************************/
+//recebe source (ponto de partida) e destiny(ponto de destino)
+void dijkstra(struct GRAFO *grafo, int partida, int destino){
+    grafo->dist[partida] = 0;     //ponto de partida tem distancia = 0
+    grafo->visitado[partida] = 1; //visita ponto de partida
+    grafo->ant[partida] = -1;     //ponto de partida não tem antecessor
+
+    struct NODO *temp = grafo->adjListas[partida]; //ponteiro para o primeiro adjacente da lista de adjacencias do vertice de partida
+    int verticeAtual = partida;                    //armazena o indice do vertice de iteração atual
+
+    //enquanto o vertice de destino não foi visitado
+    while(grafo->visitado[destino] != 1){
+        int maisProximo = temp->vertice; //armazena o indice do vertice adjacente mais proximo, é iniciado com o primeiro vertice adjacente
+        int distanciaMaisProximo = temp->distancia; //armazena a distancia do vertice adjacente mais proximo
+        //o loop abaixo defini a distancia entre vertice de partida e seus adjacentes
+        //enquanto temp apontar para um nodo existente na lista de adjacencias
+        while(temp != NULL){
+            //se o vertice ainda não foi visitado
+            if(grafo->visitado[temp->vertice] == 0){
+                if( (grafo->dist[verticeAtual] + temp->distancia) < grafo->dist[temp->vertice] ){ //se o distancia até chegar neste vertice adjacente for menor que o menor distancia anteriormente definido para chegar neste vertice adjacente
+                    grafo->dist[temp->vertice] = grafo->dist[verticeAtual] + temp->distancia;  //atualiza o distancia para chegar neste vertice
+                    grafo->ant[temp->vertice] = verticeAtual;
+                }
+                if (temp->distancia < distanciaMaisProximo){
+                    maisProximo = temp->vertice;        //atualiza o maisProximo
+                    distanciaMaisProximo = temp->distancia; //atualiza a distancia do mais proximo
+                }
+            }
+            temp = temp->prox;
+        }
+        //visitar o nodo com distancia menor e que ainda não foi visitado, entre os nodos adjacentes
+        grafo->visitado[maisProximo] = 1;
+        verticeAtual = maisProximo; //atualiza o vertice atual
+        temp = grafo->adjListas[maisProximo];
+    }
+    printf("A distancia mais proxima até o vertice de destino é: %i\n", grafo->dist[verticeAtual]);
+    int aux = destino;
+    while(aux != -1){
+        printf("%i", aux);
+        aux = grafo->ant[aux];
+    }
 }

@@ -4,8 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int b, int pixel_data_offset);
+void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int b);
 void plot_pixel(FILE *file, int y, int x, int r, int g, int b, int pixel_data_offset);
 
 
