@@ -1,5 +1,6 @@
 #include "../include/GraphTools.h"
 #include <stdlib.h>
+#include <math.h>
 
 #define INFINITO 9999
 
@@ -130,8 +131,8 @@ struct NODO * criaNo(int valor, int distancia) {
  * entrada : grafo, origem, destino, distancia                                           *
  * saída   : grafo (por referência)                                                      *
  *****************************************************************************************/
-void adicionarAresta(struct GRAFO * grafo, int origem, int destino, int distancia) {
-
+void adicionarAresta(struct GRAFO * grafo, int origem, int destino) {
+    int distancia = distanciaEntreDoisPontos(grafo->coordenadas[origem].x , grafo->coordenadas[origem].y , grafo->coordenadas[destino].x , grafo->coordenadas[destino].y);
     struct NODO *no;                      // Ponteiro para um nodo
     no = criaNo(destino, distancia);      // Cria o nodo do vértice destino.
     no->prox = grafo->adjListas[origem];  // Adiciona nó da origem para o destino.
@@ -140,4 +141,16 @@ void adicionarAresta(struct GRAFO * grafo, int origem, int destino, int distanci
     no = criaNo(origem, distancia);       // Cria o nodo do vértice origem.
     no->prox = grafo->adjListas[destino]; // Adiciona nó do destino para a origem.
     grafo->adjListas[destino] = no;       // Adiciona na lista de adjacências o vértice de origem.
+}
+
+/*****************************************************************************************
+ * distanciaEntreDoisPontos                                                              *
+ * objetivo: calcula a distancia entre dois pontos                                       *
+ * entrada : pontos x e y do vertice de origem e pontos x e y do vertice de destino      *
+ * saída   : distancia aproximada em pixels (talves seja interesante retornar float)     *
+ *****************************************************************************************/
+int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1) {
+    int distancia;
+    distancia = sqrt((pow((x1 - x0), 2)) + pow((y1 - y0), 2)); //formula da distancia entre dois pontos
+    return distancia;
 }
