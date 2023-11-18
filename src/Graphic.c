@@ -1,3 +1,4 @@
+#include "../include/Graphic.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,9 +50,9 @@ void plot_pixel(FILE *file, int y, int x, int r, int g, int b, int pixel_data_of
 
 void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int b, int pixel_data_offset) {
     FILE *file; // Ponteiro para o tipo FILE chamado file, que será usado para manipular o arquivo.
-    file = fopen("sample.bmp", "rb+"); // Abre o arquivo BMP em modo de leitura e escrita binária
+    file = fopen("mapa_unisc.bmp", "rb+"); // Abre o arquivo BMP em modo de leitura e escrita binária
     if (file == NULL) {
-        perror("Erro ao abrir arquivo");
+        perror("Erro ao abrir arquivo\n");
         return 1;
     }
 
