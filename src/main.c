@@ -12,6 +12,10 @@ int main (){
 
     adicionarAresta(grafo, 0, 1);
 
+    //chama o dijkstra
+    //chama uma função que le o vetor de anterior
+
+
     dijkstra(grafo, 0, 1);
 
     plot_line (grafo->coordenadas[0].x, grafo->coordenadas[0].y, grafo->coordenadas[1].x, grafo->coordenadas[1].y, 10, 255, 165, 0);

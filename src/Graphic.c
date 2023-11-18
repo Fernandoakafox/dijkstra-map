@@ -52,7 +52,7 @@ void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int
     FILE *file; // Ponteiro para o tipo FILE chamado file, que será usado para manipular o arquivo.
     file = fopen("../images/mapa_unisc.bmp", "rb+"); // Abre o arquivo BMP em modo de leitura e escrita binária
     if (file == NULL) {
-        perror("Erro ao abrir arquivo\n");
+        perror("Erro ao abrir arquivo, verifique se o executavel esta dentro do diretorio src\n");
         return;
     }
 

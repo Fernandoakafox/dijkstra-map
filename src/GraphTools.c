@@ -1,4 +1,5 @@
 #include "../include/GraphTools.h"
+#include "../include/ListTools.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -135,14 +136,21 @@ int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1) {
     return distancia;
 }
 
-/*****************************************************************************************
- * dijsktra                                                            *
- * objetivo:                                        *
- * entrada : grafo, vertice de partida, vertice de destino                               *
- * saída   :      *
- *****************************************************************************************/
-//recebe source (ponto de partida) e destiny(ponto de destino)
+/*************************************************************************************************************************
+ * dijsktra                                                                                                              *
+ * objetivo: Encontrar rota mais curta no grafo                                                                          *
+ * entrada : grafo, vertice de partida, vertice de destino                                                               *
+ * saída   : Retorna o endereço de uma pilha contendo o indice dos vertices da rota mais curta, partida no topo da pilha *
+ *************************************************************************************************************************/
 void dijkstra(struct GRAFO *grafo, int partida, int destino){
+    // Redefini os campos do grafo que serão utilizados pelo dijsktra
+    int i;
+    for (i = 0; i < grafo->numVertices; i++) {
+        grafo->visitado[i] = 0;
+        grafo->ant[i] = 0;
+        grafo->dist[i] = INFINITO;
+    }
+
     grafo->dist[partida] = 0;     //ponto de partida tem distancia = 0
     grafo->visitado[partida] = 1; //visita ponto de partida
     grafo->ant[partida] = -1;     //ponto de partida não tem antecessor
@@ -175,10 +183,15 @@ void dijkstra(struct GRAFO *grafo, int partida, int destino){
         verticeAtual = maisProximo; //atualiza o vertice atual
         temp = grafo->adjListas[maisProximo];
     }
+
     printf("A distancia mais proxima até o vertice de destino é: %i\n", grafo->dist[verticeAtual]);
     int aux = destino;
-    while(aux != -1){
+    struct Pilha *dijkstraRoute = NULL; //Cria um ponteiro para uma estrutura pilha 
+    inicializaPilha(&dijkstraRoute);    //Esta pilha armazenara o indice dos vertices da rota mais rapida e sera utilizada para plotar os pixels
+    // itera pelos vertices da rota mais curta, começando do destino até chegar na origem
+    while(aux != - 1){
         printf("%i", aux);
-        aux = grafo->ant[aux];
+        push(&dijkstraRoute, aux); //empilha indice do vertice 
+        aux = grafo->ant[aux];     //aux recebe o indice do vertice anterior ao vertice em questão
     }
 }
