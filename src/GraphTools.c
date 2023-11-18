@@ -1,6 +1,8 @@
 #include "../include/GraphTools.h"
 #include <stdlib.h>
 
+#define INFINITO 9999
+
 /***********************************************/
 /* Definição do Registro e da Estrutura        */
 /***********************************************/
@@ -100,7 +102,7 @@ struct GRAFO* criaGrafo(int vertices){
         grafo->adjListas[i] = NULL;
         grafo->visitado[i] = 0;
         grafo->ant[i] = 0;
-        grafo->dist[i] = 999;
+        grafo->dist[i] = INFINITO; //para o dijkstra funcionar setamos infinito, no futuro devemos fazer isso ao chamar o dijskra
     }
     
     // Retorna endereço para a estrutura grafo criada
