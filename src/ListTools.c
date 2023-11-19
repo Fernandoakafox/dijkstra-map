@@ -14,7 +14,29 @@ void inicializaPilha(struct Pilha **head){
     (*head)->topo = NULL;
 }
 
-void pop(){}
+int pop(struct Pilha **head){
+    //se a pilha estiver vazia
+    if((*head)->topo == NULL){
+        return -1;
+    }
+    struct NodoPilha *aux;
+    int vertice;
+    // se a pilha tiver 2 nodos
+    if((*head)->topo->prox != NULL){
+        aux = (*head)->topo;                 // aux aponta para o nodo no topo
+        (*head)->topo = (*head)->topo->prox; // Diminui topo "pop"
+        vertice = aux->vertice;
+        free(aux);                           // Libera espaço de memoria
+        return vertice;
+    // senão a pilha tem somente 1 nodo
+    }else{
+        aux = (*head)->topo;                 // aux aponta para o nodo no topo
+        (*head)->topo = NULL;                // topo aponta para NULL
+        vertice = aux->vertice;              
+        free(aux);                           // Libera espaço de memoria
+        return vertice;
+    }
+}
 /************************************************* 
  * push                                          *
  * objetivo: inclui nodo na pilha                *

@@ -94,3 +94,15 @@ void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int
     // Fecha o arquivo
     fclose(file);
 }
+
+
+//na primeira vez que manda as coordenadas para plot_line, manda o primeiro vertice e o segundo
+//apartir da segunda vez, manda a ultima a sofrer pop e a nova
+//recebe uma pilha de vertices
+//enquanto tiver elementos na pilha
+    //vertice = pop
+    //grafo->coordenadas[vertice].x
+    //grafo->coordenadas[vertice].y
+    //vertice2 = pop
+    //grafo->coordenadas[vertice2].x
+    //grafo->coordenadas[vertice2].y

@@ -12,9 +12,6 @@ int main (){
 
     adicionarAresta(grafo, 0, 1);
 
-    //chama o dijkstra
-    //chama uma função que le o vetor de anterior
-
 
     dijkstra(grafo, 0, 1);
 

@@ -15,7 +15,7 @@ struct Pilha{
 
 
 void inicializaPilha(struct Pilha **head);
-void pop();
+int pop(struct Pilha **head);
 void push(struct Pilha **head, int vertice);
 
 

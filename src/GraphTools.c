@@ -190,7 +190,7 @@ void dijkstra(struct GRAFO *grafo, int partida, int destino){
     inicializaPilha(&dijkstraRoute);    //Esta pilha armazenara o indice dos vertices da rota mais rapida e sera utilizada para plotar os pixels
     // itera pelos vertices da rota mais curta, começando do destino até chegar na origem
     while(aux != - 1){
-        printf("%i", aux);
+        printf("%i ", aux);
         push(&dijkstraRoute, aux); //empilha indice do vertice 
         aux = grafo->ant[aux];     //aux recebe o indice do vertice anterior ao vertice em questão
     }
