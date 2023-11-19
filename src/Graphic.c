@@ -1,4 +1,6 @@
 #include "../include/Graphic.h"
+#include "../include/ListTools.h"
+#include "../include/GraphTools.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,6 +51,8 @@ void plot_pixel(FILE *file, int y, int x, int r, int g, int b, int pixel_data_of
  ************************************************/
 
 void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int b){
+    y0 = IMG_HEIGHT - y0; //correção do y0
+    y1 = IMG_HEIGHT - y1; //correção do y1
     FILE *file; // Ponteiro para o tipo FILE chamado file, que será usado para manipular o arquivo.
     file = fopen("../images/mapa_unisc.bmp", "rb+"); // Abre o arquivo BMP em modo de leitura e escrita binária
     if (file == NULL) {
@@ -94,8 +98,8 @@ void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int
     // Fecha o arquivo
     fclose(file);
 }
-
-
+//plot_route
+//recebe pilha e grafo
 //na primeira vez que manda as coordenadas para plot_line, manda o primeiro vertice e o segundo
 //apartir da segunda vez, manda a ultima a sofrer pop e a nova
 //recebe uma pilha de vertices
@@ -106,3 +110,18 @@ void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int
     //vertice2 = pop
     //grafo->coordenadas[vertice2].x
     //grafo->coordenadas[vertice2].y
+
+void plot_route(struct Pilha **head, struct GRAFO *grafo){
+    int vertice1, vertice2;
+    if((*head)->topo != NULL){
+        vertice1 = pop(head);
+        vertice2 = pop(head);
+        plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , 255, 165, 0);
+    }
+    while((*head)->topo != NULL){
+        vertice1 = vertice2;
+        vertice2 = pop(head);
+        plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , 255, 165, 0);
+    }
+}
+

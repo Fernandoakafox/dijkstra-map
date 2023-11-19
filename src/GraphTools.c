@@ -142,7 +142,7 @@ int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1) {
  * entrada : grafo, vertice de partida, vertice de destino                                                               *
  * saída   : Retorna o endereço de uma pilha contendo o indice dos vertices da rota mais curta, partida no topo da pilha *
  *************************************************************************************************************************/
-void dijkstra(struct GRAFO *grafo, int partida, int destino){
+struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
     // Redefini os campos do grafo que serão utilizados pelo dijsktra
     int i;
     for (i = 0; i < grafo->numVertices; i++) {
@@ -194,4 +194,5 @@ void dijkstra(struct GRAFO *grafo, int partida, int destino){
         push(&dijkstraRoute, aux); //empilha indice do vertice 
         aux = grafo->ant[aux];     //aux recebe o indice do vertice anterior ao vertice em questão
     }
+    return dijkstraRoute;
 }
