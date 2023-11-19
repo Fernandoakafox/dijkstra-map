@@ -8,12 +8,16 @@
  * entrada : cabeça da pilha                     *
  * saida   :                                     *
  *************************************************/
-
 void inicializaPilha(struct Pilha **head){
     *head = (struct Pilha*) malloc(sizeof(struct Pilha));
     (*head)->topo = NULL;
 }
-
+/**************************************************************** 
+ * pop                                                          *
+ * objetivo: remover um nodo da pilha                           *
+ * entrada : cabeça da pilha                                    *
+ * saida   : inteiro do campo vertice do nodo removido da pilha *
+ ****************************************************************/
 int pop(struct Pilha **head){
     //se a pilha estiver vazia
     if((*head)->topo == NULL){
