@@ -6,9 +6,6 @@
 
 #define INFINITO 9999
 
-
-
-
 /***********************************************/
 /* Funções                                     */
 /***********************************************/
@@ -32,6 +29,7 @@ struct GRAFO* criaGrafo(int vertices){
     grafo->ant = (int *)malloc(vertices * sizeof(int));
     grafo->dist = (int *)malloc(vertices * sizeof(int));
     grafo->coordenadas = (struct PONTO *)malloc(vertices * sizeof(struct PONTO));
+    grafo->nomes = (char **)malloc(vertices * sizeof(char *));
 
     if (!(grafo->visitado && grafo->adjListas && grafo->ant && grafo->dist && grafo->coordenadas)) {
         limparGrafo(grafo); // Função para liberar a memória alocada
@@ -56,10 +54,10 @@ void limparGrafo(struct GRAFO *grafo) {
         free(grafo->ant);
         free(grafo->dist);
         free(grafo->coordenadas);
+        free(grafo->nomes);
         free(grafo);
     }
 }
-
 
 /*************************************************************
  * NECESARIO FAZER : verificação de memoria para cada malloc * 
@@ -74,6 +72,12 @@ struct NODO * criaNo(int valor, int distancia) {
     no->distancia = distancia;
     no->prox = NULL;
     return no;
+}
+
+void adicionarVertice(struct GRAFO * grafo, int vertice, char nome[3], int x, int y) {
+    grafo->nomes[vertice] = nome;
+    grafo->coordenadas[vertice].x = x;
+    grafo->coordenadas[vertice].y = y;
 }
 
 /*****************************************************************************************
