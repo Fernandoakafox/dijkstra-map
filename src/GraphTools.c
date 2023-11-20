@@ -17,75 +17,44 @@
  * saida   : endereço de memoria para o grafo   *
  ************************************************/
 struct GRAFO* criaGrafo(int vertices){
-    struct GRAFO * grafo = (struct GRAFO * ) malloc(sizeof(struct GRAFO)); // Aloca memória para o grafo.
-    if (grafo == NULL){
-        printf("\n Não foi possível alocar memória!");
-        return NULL; //indica falha na alocação
+    struct GRAFO * grafo = (struct GRAFO * ) malloc(sizeof(struct GRAFO));
+    if (!grafo) {
+        printf("\n Falha na alocação de memória!");
+        return NULL;
     }
 
-    grafo->numVertices = vertices; // Inicializa o campo de número de vértices do grafo.
-    
-    grafo->visitado = (int *)malloc(vertices * sizeof(int)); // Cria a lista sequencial de visitados conforme o número de vértices.
-    // Verifica a alocação de memória para grafo->visitado
-    if (grafo->visitado == NULL) {
-        printf("\nNão foi possível alocar memória para visitado!");
-        free(grafo); // Libera a memória alocada para o grafo
-        return NULL; // Indica falha na alocação
+    grafo->numVertices = vertices;
+    grafo->visitado = (int *)malloc(vertices * sizeof(int));
+    grafo->adjListas = (struct NODO **)malloc(vertices * sizeof(struct NODO *));
+    grafo->ant = (int *)malloc(vertices * sizeof(int));
+    grafo->dist = (int *)malloc(vertices * sizeof(int));
+    grafo->coordenadas = (struct PONTO *)malloc(vertices * sizeof(struct PONTO));
+
+    if (!(grafo->visitado && grafo->adjListas && grafo->ant && grafo->dist && grafo->coordenadas)) {
+        limparGrafo(grafo); // Função para liberar a memória alocada
+        printf("\n Falha na alocação de memória!");
+        return NULL;
     }
 
-    grafo->adjListas = (struct NODO **)malloc(vertices * sizeof(struct NODO *));// Cria a lista de adjacências conforme o número de vértices.
-    // Verifica a alocação de memória para grafo->adjListas
-    if (grafo->adjListas == NULL) {
-        printf("\nNão foi possível alocar memória para adjListas!");
-        free(grafo->visitado); // Libera a memória alocada para visitado
-        free(grafo); // Libera a memória alocada para o grafo
-        return NULL; // Indica falha na alocação
-    }
-
-    grafo->ant = (int *)malloc(vertices * sizeof(int)); // Cria a lista sequencial que armazena o vertice anterior
-    // Verifica a alocação de memória para grafo->ant
-    if (grafo->ant == NULL) {
-        printf("\nNão foi possível alocar memória para ant!");
-        free(grafo->adjListas); // Libera a memória alocada para adjListas
-        free(grafo->visitado); // Libera a memória alocada para visitado
-        free(grafo); // Libera a memória alocada para o grafo
-        return NULL; // Indica falha na alocação
-    }
-
-    grafo->dist = (int *)malloc(vertices * sizeof(int)); // Cria a lista sequencial que armazena a distancia do vertice em relação ao ponto de partida
-    // Verifica a alocação de memória para grafo->dist
-    if (grafo->dist == NULL) {
-        printf("\nNão foi possível alocar memória para dist!");
-        free(grafo->ant); // Libera a memória alocada para ant
-        free(grafo->adjListas); // Libera a memória alocada para adjListas
-        free(grafo->visitado); // Libera a memória alocada para visitado
-        free(grafo); // Libera a memória alocada para o grafo
-        return NULL; // Indica falha na alocação
-    }
-
-    grafo->coordenadas = (struct PONTO *)malloc(vertices * sizeof(struct PONTO)); // Cria o vetor estruturado que armazena as coordenadas do vertice
-    // Verifica a alocação de memória para grafo->coordenadas
-    if (grafo->coordenadas == NULL) {
-        printf("\nNão foi possível alocar memória para coordenadas!");
-        free(grafo->dist); // Libera a memória alocada para dist
-        free(grafo->ant); // Libera a memória alocada para ant
-        free(grafo->adjListas); // Libera a memória alocada para adjListas
-        free(grafo->visitado); // Libera a memória alocada para visitado
-        free(grafo); // Libera a memória alocada para o grafo
-        return NULL; // Indica falha na alocação
-    }
-        
-    // Itera sobre os campos do grafo setando os valores predefinidos
-    int i;
-    for (i = 0; i < vertices; i++) {
+    for (int i = 0; i < vertices; i++) {
         grafo->adjListas[i] = NULL;
         grafo->visitado[i] = 0;
         grafo->ant[i] = 0;
-        grafo->dist[i] = INFINITO; //para o dijkstra funcionar setamos infinito, no futuro devemos fazer isso ao chamar o dijskra
+        grafo->dist[i] = INFINITO;
     }
-    
-    // Retorna endereço para a estrutura grafo criada
+
     return grafo;
+}
+
+void limparGrafo(struct GRAFO *grafo) {
+    if (grafo) {
+        free(grafo->visitado);
+        free(grafo->adjListas);
+        free(grafo->ant);
+        free(grafo->dist);
+        free(grafo->coordenadas);
+        free(grafo);
+    }
 }
 
 /*************************************************************
