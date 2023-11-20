@@ -6,9 +6,6 @@
 
 #define INFINITO 9999
 
-
-
-
 /***********************************************/
 /* Funções                                     */
 /***********************************************/
@@ -104,6 +101,12 @@ struct NODO * criaNo(int valor, int distancia) {
     no->distancia = distancia;
     no->prox = NULL;
     return no;
+}
+
+void adicionarVertice(struct GRAFO * grafo, int vertice, char nome[3], int x, int y) {
+    grafo->nomes[vertice] = nome;
+    grafo->coordenadas[vertice].x = x;
+    grafo->coordenadas[vertice].y = y;
 }
 
 /*****************************************************************************************

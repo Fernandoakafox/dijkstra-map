@@ -23,8 +23,10 @@ struct PONTO{
 struct GRAFO {
     int *dist; // Vetor para armazenar a distancia do vertice em relação ao ponto de partida
     int *ant;  // Vetor para armazenar o vertice anterior
+    
     int numVertices;
     int *visitado;
+    char **nomes; // Vetor de strings, para armazenar os nomes dos vertices
     struct PONTO *coordenadas; // Vetor de estruturas, para armazenar as coordenadas dos vertices
     struct NODO ** adjListas; // Para um array bidimensional dinâmico usamos **. Da mesma forma, usamos struct nodo** para armazenar um array para uma lista encadeada.
 };
@@ -34,6 +36,6 @@ struct NODO * criaNo(int valor, int distancia);
 void adicionarAresta(struct GRAFO * grafo, int origem, int destino);
 int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1);
 struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino);
-
+void adicionarVertice(struct GRAFO * grafo, int vertice, char nome[3], int x, int y);
 
 #endif // GRAPHTOOLS_H

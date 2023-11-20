@@ -7,15 +7,10 @@
 //ATENÇÃO -> O que esta comentado em main, esta comentado pois ao rodar da bug, descobrir o bug
 int main (){
     struct GRAFO *grafo = criaGrafo(4);
-    grafo->coordenadas[0].x = 871;
-    grafo->coordenadas[0].y = 351;
-    grafo->coordenadas[1].x = 871;
-    grafo->coordenadas[1].y = 479;
-    grafo->coordenadas[2].x = 799;
-    grafo->coordenadas[2].y = 479;
-    grafo->coordenadas[3].x = 799;
-    grafo->coordenadas[3].y = 536;
-
+    adicionarVertice(grafo, 0, "B1", 871, 351);
+    adicionarVertice(grafo, 1, "0", 871, 479);
+    adicionarVertice(grafo, 2, "0", 799, 479);  // 0 pode significar encruzilhada ou algo do tipo
+    adicionarVertice(grafo, 3, "B2", 799, 536);
 
     adicionarAresta(grafo, 0, 1);
     adicionarAresta(grafo, 1, 2);
