@@ -19,7 +19,7 @@ int main (){
 
 
     struct Pilha *dijkstraRoute = dijkstra(grafo, 0, 3);
-    //printf("TOPO: %i\n", dijkstraRoute->topo->vertice); // O bug parece ser com a pilha
+    printf("TOPO: %i\n", dijkstraRoute->topo->vertice); // O bug parece ser com a pilha
 
     plot_route(&dijkstraRoute, grafo);
 }

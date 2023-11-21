@@ -52,6 +52,7 @@ void push(struct Pilha **head, int vertice){
     no->vertice = vertice;
     if((*head)->topo == NULL){
         no->prox = NULL;
+        (*head)->topo = no;
     }else{
         no->prox = (*head)->topo;
         (*head)->topo = no;
