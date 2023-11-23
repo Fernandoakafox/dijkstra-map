@@ -3,8 +3,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 #define INFINITO 9999
+#define MAX_LINE_LENGTH 1000 //tamanho maximo das linhas do arquivo csv
+#define MAX_COLUMNS 8 //numero maximo de colunas do arquivo csv
+
 
 void limparGrafo(struct GRAFO *grafo);
 
@@ -32,7 +36,7 @@ struct GRAFO* criaGrafo(int vertices){
     grafo->ant = (int *)malloc(vertices * sizeof(int));
     grafo->dist = (int *)malloc(vertices * sizeof(int));
     grafo->coordenadas = (struct PONTO *)malloc(vertices * sizeof(struct PONTO));
-    grafo->nomes = (char **)malloc(vertices * sizeof(char *));
+    grafo->nomes = (char **)malloc(vertices * sizeof(char *)); //array de ponteiros para caracteres/strings
 
     if (!(grafo->visitado && grafo->adjListas && grafo->ant && grafo->dist && grafo->coordenadas)) {
         limparGrafo(grafo); // Função para liberar a memória alocada
@@ -168,4 +172,52 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
         aux = grafo->ant[aux];     //aux recebe o indice do vertice anterior ao vertice em questão
     }
     return dijkstraRoute;
+}
+
+/**********************************************************************************************
+ * importaGrafo                                                                               *
+ * objetivo: importar vertices, coordenadas dos vertices, e seus adjacentes de um arquivo csv.*
+ * entrada :                                                                                  *
+ * saída   : vertices, coordenadas dos vertices e lista de adjacencias criadas/atualizadas    *
+ **********************************************************************************************/
+void  importaGrafo(struct GRAFO *grafo){
+    const char *filename = "../input_data/grafoData.csv";
+
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo csv");
+        exit(EXIT_FAILURE);
+    }
+
+    char line[MAX_LINE_LENGTH];
+    struct DataRecord record;
+
+        // Ignorar a linha de cabeçalho se houver uma
+    if (fgets(line, MAX_LINE_LENGTH, file) == NULL) {
+        perror("Erro ao ler a linha de cabeçalho do arquivo csv");
+        exit(EXIT_FAILURE);
+    }
+
+   
+    //DEBUG
+    int L = 0;
+    // Lê uma linha do arquivo 'file' e armazena os caracteres lidos na variavel 'line', enquanto houver linhas. MAX_LINE_LENGTH define o tamanho maximo da linha
+    while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+        sscanf(line, "%i,%i,%i,%[^,],%i,%i,%i,%i", &record.vertice, &record.x, &record.y, record.referencia, &record.adjacente1, &record.adjacente2, &record.adjacente3, &record.adjacente4);
+        
+        printf("Linha %i, vertice = %i csv\n", L, record.vertice);//DEBUG
+        L++; //DEBUG
+         // TODO:  bug ao chamar a função adicionarVertice, ocorre segmentation fault (core dumped).
+         
+        //adicionarVertice(grafo, record.vertice, record.referencia, record.x, record.y); //adiciona o vertice da coluna iterada e seus dados
+/*         if(record.adjacente1 != -1)
+            adicionarAresta(grafo, record.vertice, record.adjacente1);
+        if(record.adjacente2 != -1)
+            adicionarAresta(grafo, record.vertice, record.adjacente2);
+        if(record.adjacente3 != -1)
+            adicionarAresta(grafo, record.vertice, record.adjacente3);
+        if(record.adjacente4 != -1)
+            adicionarAresta(grafo, record.vertice, record.adjacente4); */
+    }
+    fclose(file);
 }
