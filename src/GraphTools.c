@@ -182,7 +182,7 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
  **********************************************************************************************/
 void  importaGrafo(struct GRAFO *grafo){
     const char *filename = "../input_data/grafoData.csv";
-
+    //ponteiro para o arquivo no modo read (leitura)
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo csv");
@@ -190,25 +190,19 @@ void  importaGrafo(struct GRAFO *grafo){
     }
 
     char line[MAX_LINE_LENGTH];
-    struct DataRecord record;
+    struct DataRecord record; //estrutura record para armazenar valores das colunas
 
-        // Ignorar a linha de cabeçalho se houver uma
+    // Ignorar a linha de cabeçalho se houver uma
     if (fgets(line, MAX_LINE_LENGTH, file) == NULL) {
         perror("Erro ao ler a linha de cabeçalho do arquivo csv");
         exit(EXIT_FAILURE);
     }
 
-   
-    //DEBUG
     int L = 0;
     // Lê uma linha do arquivo 'file' e armazena os caracteres lidos na variavel 'line', enquanto houver linhas. MAX_LINE_LENGTH define o tamanho maximo da linha
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+        //armazena os valores entre as virgulas na estrutura record, visto que o csv divide colunas utilizando ','
         sscanf(line, "%i,%i,%i,%[^,],%i,%i,%i,%i", &record.vertice, &record.x, &record.y, record.referencia, &record.adjacente1, &record.adjacente2, &record.adjacente3, &record.adjacente4);
-        
-        printf("Linha %i, vertice = %i csv\n", L, record.vertice);//DEBUG
-        L++; //DEBUG
-         // TODO:  bug ao chamar a função adicionarVertice, ocorre segmentation fault (core dumped).
-         
         adicionarVertice(grafo, record.vertice, record.referencia, record.x, record.y); //adiciona o vertice da coluna iterada e seus dados
         if(record.adjacente1 != -1)
             adicionarAresta(grafo, record.vertice, record.adjacente1);
