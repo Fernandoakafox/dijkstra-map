@@ -31,11 +31,23 @@ struct GRAFO {
     struct NODO ** adjListas; // Para um array bidimensional dinâmico usamos **. Da mesma forma, usamos struct nodo** para armazenar um array para uma lista encadeada.
 };
 
+//estrutura para manipular dados de um arquivo csv
+struct DataRecord {
+    int vertice;        //coluna 1 do csv
+    int x;              //coluna 2 do csv
+    int y;              //coluna 3 do csv
+    char referencia[3]; //coluna 4 do csv
+    int adjacente1;     //coluna 5 do csv
+    int adjacente2;     //coluna 6 do csv
+    int adjacente3;     //coluna 7 do csv
+    int adjacente4;     //coluna 8 do csv
+};
+
 struct GRAFO * criaGrafo(int vertices);
 struct NODO * criaNo(int valor, int distancia);
 void adicionarAresta(struct GRAFO * grafo, int origem, int destino);
 int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1);
 struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino);
 void adicionarVertice(struct GRAFO * grafo, int vertice, char nome[3], int x, int y);
-
+void  importaGrafo(struct GRAFO * grafo);
 #endif // GRAPHTOOLS_H
