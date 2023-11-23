@@ -209,15 +209,15 @@ void  importaGrafo(struct GRAFO *grafo){
         L++; //DEBUG
          // TODO:  bug ao chamar a função adicionarVertice, ocorre segmentation fault (core dumped).
          
-        //adicionarVertice(grafo, record.vertice, record.referencia, record.x, record.y); //adiciona o vertice da coluna iterada e seus dados
-/*         if(record.adjacente1 != -1)
+        adicionarVertice(grafo, record.vertice, record.referencia, record.x, record.y); //adiciona o vertice da coluna iterada e seus dados
+        if(record.adjacente1 != -1)
             adicionarAresta(grafo, record.vertice, record.adjacente1);
         if(record.adjacente2 != -1)
             adicionarAresta(grafo, record.vertice, record.adjacente2);
         if(record.adjacente3 != -1)
             adicionarAresta(grafo, record.vertice, record.adjacente3);
         if(record.adjacente4 != -1)
-            adicionarAresta(grafo, record.vertice, record.adjacente4); */
+            adicionarAresta(grafo, record.vertice, record.adjacente4);
     }
     fclose(file);
 }
