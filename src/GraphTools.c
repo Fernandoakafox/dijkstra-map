@@ -85,9 +85,9 @@ void adicionarVertice(struct GRAFO * grafo, int vertice, char nome[3], int x, in
 
 /*****************************************************************************************
  * adicionarAresta                                                                       *
- * objetivo: adiciona aresta bidirecional entre vertice de origem e vertice de destino   *
+ * objetivo: adiciona o vertice de destino na lista de adjacencias do vertice de origem  *
  * entrada : grafo, origem, destino, distancia                                           *
- * saída   : grafo (por referência)                                                      *
+ * saída   : lista de adjacencias atualizada                                             *
  *****************************************************************************************/
 void adicionarAresta(struct GRAFO * grafo, int origem, int destino) {
     int distancia = distanciaEntreDoisPontos(grafo->coordenadas[origem].x , grafo->coordenadas[origem].y , grafo->coordenadas[destino].x , grafo->coordenadas[destino].y);
@@ -95,10 +95,6 @@ void adicionarAresta(struct GRAFO * grafo, int origem, int destino) {
     no = criaNo(destino, distancia);      // Cria o nodo do vértice destino.
     no->prox = grafo->adjListas[origem];  // Adiciona nó da origem para o destino.
     grafo->adjListas[origem] = no;        // Adiciona na lista de adjacências o vértice de destino.
-
-    no = criaNo(origem, distancia);       // Cria o nodo do vértice origem.
-    no->prox = grafo->adjListas[destino]; // Adiciona nó do destino para a origem.
-    grafo->adjListas[destino] = no;       // Adiciona na lista de adjacências o vértice de origem.
 }
 
 /*****************************************************************************************
