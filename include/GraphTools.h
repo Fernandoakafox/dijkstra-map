@@ -31,7 +31,7 @@ struct GRAFO {
     struct NODO ** adjListas; // Para um array bidimensional dinâmico usamos **. Da mesma forma, usamos struct nodo** para armazenar um array para uma lista encadeada.
 };
 
-//estrutura para manipular dados de um arquivo csv
+//estrutura para armazenar, temporariamente, dados de um arquivo csv
 struct DataRecord {
     int vertice;        //coluna 1 do csv
     int x;              //coluna 2 do csv
