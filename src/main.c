@@ -24,7 +24,7 @@ void setPontoPartida();
 void setPontoChegada();
 void limparPontos();
 void alterarCorDaLinha();
-void tracarRota(struct GRAFO * grafo);
+void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute);
 
 
 // .:| ========= Globais ========= |:.
@@ -44,8 +44,10 @@ int main (){
 
     // inicializa o Grafo pelo arquivo csv
     importaGrafo(grafo);
-        
-    //struct Pilha *dijkstraRoute = dijkstra(grafo, 5, 17);
+    imprimeGrafo(grafo);
+
+    struct Pilha *dijkstraRoute;
+    // = dijkstra(grafo, 5, 17);
     //printf("TOPO: %i\n", dijkstraRoute->topo->vertice);
     
     //plot_route(&dijkstraRoute, grafo);
@@ -82,7 +84,7 @@ int main (){
                 break;
 
             case 5:
-                tracarRota(grafo);
+                tracarRota(grafo, &dijkstraRoute);
                 break;
 
 
@@ -258,11 +260,12 @@ void alterarCorDaLinha() {
 }
 
 // [5] Traçar Rota
-void tracarRota(struct GRAFO * grafo) {
+void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute){
 
     // validar se já foram escolhidos pontos de entrada e saída
     if (pontoChegada != -1 && pontoPartida != -1){
-        dijkstra(grafo, pontoPartida, pontoChegada);
+        *dijkstraRoute = dijkstra(grafo, pontoPartida, pontoChegada);
+        //plot_route(&dijkstraRoute, grafo);
     } else {
         printf("\n Você deve escolher os pontos de partida e entrada entes de traçar a rota");
         system("pause");
