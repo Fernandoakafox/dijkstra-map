@@ -109,7 +109,7 @@ void adicionarAresta(struct GRAFO * grafo, int origem, int destino) {
  *****************************************************************************************/
 int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1) {
     int distancia;
-    distancia = sqrt((pow((x1 - x0), 2)) + pow((y1 - y0), 2)); //formula da distancia entre dois pontos
+    distancia = sqrt(pow((x1 - x0), 2) + pow((y1 - y0), 2)); //formula da distancia entre dois pontos
     return distancia;
 }
 
@@ -180,7 +180,7 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
  * entrada :                                                                                  *
  * saída   : vertices, coordenadas dos vertices e lista de adjacencias criadas/atualizadas    *
  **********************************************************************************************/
-void  importaGrafo(struct GRAFO *grafo){
+void importaGrafo(struct GRAFO *grafo){
     const char *filename = "../input_data/grafoData.csv";
     //ponteiro para o arquivo no modo read (leitura)
     FILE *file = fopen(filename, "r");
@@ -198,12 +198,26 @@ void  importaGrafo(struct GRAFO *grafo){
         exit(EXIT_FAILURE);
     }
 
-    int L = 0;
     // Lê uma linha do arquivo 'file' e armazena os caracteres lidos na variavel 'line', enquanto houver linhas. MAX_LINE_LENGTH define o tamanho maximo da linha
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
-        //armazena os valores entre as virgulas na estrutura record, visto que o csv divide colunas utilizando ','
-        sscanf(line, "%i,%i,%i,%[^,],%i,%i,%i,%i", &record.vertice, &record.x, &record.y, record.referencia, &record.adjacente1, &record.adjacente2, &record.adjacente3, &record.adjacente4);
+        //armazena os valores das colunas 1, 2, 3 e 4
+        sscanf(line, "%i,%i,%i,%[^,]", &record.vertice, &record.x, &record.y, record.referencia);
         adicionarVertice(grafo, record.vertice, record.referencia, record.x, record.y); //adiciona o vertice da coluna iterada e seus dados
+    }
+
+    // Reposiciona o ponteiro do arquivo para o início
+    fseek(file, 0, SEEK_SET);
+
+    // Ignorar a linha de cabeçalho se houver uma
+    if (fgets(line, MAX_LINE_LENGTH, file) == NULL) {
+        perror("Erro ao ler a linha de cabeçalho do arquivo csv");
+        exit(EXIT_FAILURE);
+    }
+
+    // Lê uma linha do arquivo 'file' e armazena os caracteres lidos na variavel 'line', enquanto houver linhas. MAX_LINE_LENGTH define o tamanho maximo da linha
+    while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+        //armazena os valores das colunas 5, 6, 7 e 8
+        sscanf(line, "%i,%*i,%*i,%*[^,],%i,%i,%i,%i", &record.vertice, &record.adjacente1, &record.adjacente2, &record.adjacente3, &record.adjacente4);
         if(record.adjacente1 != -1)
             adicionarAresta(grafo, record.vertice, record.adjacente1);
         if(record.adjacente2 != -1)
@@ -213,5 +227,25 @@ void  importaGrafo(struct GRAFO *grafo){
         if(record.adjacente4 != -1)
             adicionarAresta(grafo, record.vertice, record.adjacente4);
     }
+
     fclose(file);
+}
+/************************************************ 
+ * mostra    Grafo                              *
+ * objetivo: imprimir o grafo                   *
+ * entrada : grafo                              *
+ * saída   : nenhuma                            *
+ ************************************************/
+void imprimeGrafo(struct GRAFO *grafo){
+    int i;
+    for( i = 0; i < grafo->numVertices; i++){
+        struct NODO *temp = grafo->adjListas[i]; // Cria um ponteiro temporário para caminhar pelo grafo.
+        printf( "\n Lista de adjacencias do vertice %d\n ", i );
+        while(temp){
+            printf("%d -> ", temp->vertice);
+            printf("(%i)", temp->distancia);
+            temp = temp->prox;
+        }
+        printf("\n" );
+    }
 }

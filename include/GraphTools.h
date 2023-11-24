@@ -50,4 +50,5 @@ int distanciaEntreDoisPontos(int x0, int y0, int x1, int y1);
 struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino);
 void adicionarVertice(struct GRAFO * grafo, int vertice, char nome[3], int x, int y);
 void  importaGrafo(struct GRAFO * grafo);
+void imprimeGrafo(struct GRAFO *grafo);
 #endif // GRAPHTOOLS_H
