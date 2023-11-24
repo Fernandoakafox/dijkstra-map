@@ -4,6 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// .:| ========= Declaração de funções de outros arquivos ========== |:.
+// é necessário declara-las aqui pois ao usa-las dentro de outras funções na main
+// não são consideradas declaradas
+int getColorRed();
+int getColorGreen();
+int getColorBlue();
+
+void setColorRed();
+void setColorGreen();
+void setColorBlue();
+
 
 // .:| ========= Declaração das funções ========= |:.
 void printDisplay();
@@ -12,6 +23,7 @@ void printMenu();
 void setPontoPartida();
 void setPontoChegada();
 void limparPontos();
+void alterarCorDaLinha();
 void tracarRota(struct GRAFO * grafo);
 
 
@@ -28,6 +40,7 @@ int pontoChegada = -1;
 int main (){
     int opcao;
     struct GRAFO *grafo = criaGrafo(NUM_VERTICES); //temos vertice 0, logo se o nosso ultimo vertice é o 37, temos no total 38 vertices
+
 
     // inicializa o Grafo pelo arquivo csv
     importaGrafo(grafo);
@@ -65,6 +78,10 @@ int main (){
                 break;
 
             case 4: 
+                alterarCorDaLinha();
+                break;
+
+            case 5:
                 tracarRota(grafo);
                 break;
 
@@ -83,8 +100,9 @@ int main (){
 
 void printDisplay() {
     printf("\n| === DISPLAY === |");
+
+    // Pontos de Entrada e saída
     printf("\n Ponto de Partida: ");
-    
     if (pontoPartida != -1){
          printf("%d", pontoPartida);
     } else {
@@ -99,6 +117,13 @@ void printDisplay() {
     }
 
     printf("\n");
+
+    // Cores da linha
+    printf("\n Tonalidade Vermelha da Linha: %d", getColorRed());
+    printf("\n Tonalidade Verde da Linha: %d", getColorGreen());
+    printf("\n Tonalidade Azul da Linha: %d", getColorBlue());
+
+    printf("\n");
     printf("\n");
 }
 
@@ -108,9 +133,20 @@ void printMenu() {
     printf("\n     [1] Escolher ponto de partida ");
     printf("\n     [2] Escolher ponto de chegada ");
     printf("\n     [3] Resetar pontos de Partida e Chegada ");
-    printf("\n     [4] Traçar rota ");
+    printf("\n     [4] Alterar a cor da Linha ");
+    printf("\n     [5] Traçar rota ");
     printf("\n     [0] Sair");
     printf("\n  :| ======================= ==== ======================= |: \n");
+}
+
+
+void printfOpcoesCores() {
+    printf("\n === Escolha a cor da linha ===");
+    printf("\n [1] Padrão (recomentada)");
+    printf("\n [2] Vermelho");
+    printf("\n [3] Verde");
+    printf("\n [4] Azul");
+    printf("\n [5] Custom");
 }
 
 
@@ -158,7 +194,7 @@ void setPontoChegada () {
 }
 
 
-// [5] Limpar Pontos de Partida e Chegada
+// [3] Limpar Pontos de Partida e Chegada
 void limparPontos() {
     pontoChegada = -1;
     pontoPartida = -1;
@@ -166,8 +202,62 @@ void limparPontos() {
     printf("Pontos de Partida e Chegada Resetados");
 }
 
+// [4] Alterar a cor da linha
+void alterarCorDaLinha() {
+    int opcao;
+    int entradaInvalida = 1;
 
-// [6] Traçar Rota
+    while (entradaInvalida){
+
+        printfOpcoesCores();
+        printf( "\n Opção: " );
+        fflush( stdin );
+        scanf("%i", &opcao);
+
+        switch (opcao){
+        
+            case 1: // PADRÃO
+                setColorRed(255);
+                setColorGreen(165);
+                setColorBlue(0);
+                entradaInvalida = 0;
+                break;
+
+            case 2: // VERMELHO
+                setColorRed(255);
+                setColorGreen(0);
+                setColorBlue(0);
+                entradaInvalida = 0;
+                break;
+            
+            case 3: // VERDE
+                setColorRed(0);
+                setColorGreen(255);
+                setColorBlue(0);
+                entradaInvalida = 0;
+                break;
+
+            case 4: // AZUL
+                setColorRed(0);   
+                setColorGreen(0);
+                setColorBlue(255);
+                entradaInvalida = 0;
+                break;
+
+            case 5:
+                printf("Indisponível");
+                entradaInvalida = 0;
+                break;
+
+
+            default:
+                printf("\n Opção Inválida!");
+                break;
+        }
+    }
+}
+
+// [5] Traçar Rota
 void tracarRota(struct GRAFO * grafo) {
 
     // validar se já foram escolhidos pontos de entrada e saída
@@ -175,6 +265,7 @@ void tracarRota(struct GRAFO * grafo) {
         dijkstra(grafo, pontoPartida, pontoChegada);
     } else {
         printf("\n Você deve escolher os pontos de partida e entrada entes de traçar a rota");
+        system("pause");
     }
 }
 

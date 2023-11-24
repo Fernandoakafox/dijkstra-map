@@ -7,6 +7,32 @@
 #define IMG_WIDTH 1280
 #define IMG_HEIGHT 758
 
+// Graphic.h
+
+#ifndef GRAPHIC_H
+#define GRAPHIC_H
+
+// Function declarations
+int getColorRed();
+int getColorGreen();
+int getColorBlue();
+void setColorRed(int newColor);
+void setColorGreen(int newColor);
+void setColorBlue(int newColor);
+
+#endif // GRAPHIC_H
+
+
+
+// .:| ========= Globais ========= |:.
+int red = 255;
+int green = 165;
+int blue = 0;
+
+int espessura = 10;
+
+
+
 /***********************************************/
 /* Funções                                     */
 /***********************************************/
@@ -50,7 +76,7 @@ void plot_pixel(FILE *file, int y, int x, int r, int g, int b, int pixel_data_of
  * saida   : alteração da cor de uma linha de pixels       *
  ************************************************/
 
-void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int b){
+void plot_line (int x0, int y0, int x1, int y1, int espessura, int red, int green, int blue){
     y0 = IMG_HEIGHT - y0; //correção do y0
     y1 = IMG_HEIGHT - y1; //correção do y1
     FILE *file; // Ponteiro para o tipo FILE chamado file, que será usado para manipular o arquivo.
@@ -80,7 +106,7 @@ void plot_line (int x0, int y0, int x1, int y1, int espessura, int r, int g, int
             int nx1 = x1 + tx, ny1 = y1 + ty;
 
             while (1) {
-                plot_pixel(file, ny0, nx0, r, g, b, pixel_data_offset);
+                plot_pixel(file, ny0, nx0, red, green, blue, pixel_data_offset);
                 if (nx0 == nx1 && ny0 == ny1)
                     break;
                 e2 = 2 * err;
@@ -117,12 +143,52 @@ void plot_route(struct Pilha **head, struct GRAFO *grafo){
         printf("aqui\n");
         vertice1 = pop(head);
         vertice2 = pop(head);
-        plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , 255, 165, 0);
+        plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , red, green, blue);
     }
     while((*head)->topo != NULL){
         vertice1 = vertice2;
         vertice2 = pop(head);
-        plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , 255, 165, 0);
+        plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , red, green, blue);
     }
 }
+
+
+
+
+// ===== GETTERS ================================================ 
+
+int getEspessura() {
+    return espessura;
+}
+
+int getColorRed() {
+    return red;
+}
+
+int getColorGreen() {
+    return green;
+}
+
+int getColorBlue() {
+    return blue;
+}
+
+// ===== SETTERS ================================================ 
+
+void setEspessura(int novaEspessura) {
+    espessura = novaEspessura;
+}
+
+void setColorRed(int newColor) {
+    red = newColor;
+}
+
+void setColorGreen(int newColor) {
+    green = newColor;
+}
+
+void setColorBlue(int newColor) {
+    blue = newColor;
+}
+
 
