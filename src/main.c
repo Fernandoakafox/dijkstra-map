@@ -265,7 +265,7 @@ void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute){
     // validar se já foram escolhidos pontos de entrada e saída
     if (pontoChegada != -1 && pontoPartida != -1){
         *dijkstraRoute = dijkstra(grafo, pontoPartida, pontoChegada);
-        //plot_route(&dijkstraRoute, grafo);
+        plot_route(&(*dijkstraRoute), grafo);
     } else {
         printf("\n Você deve escolher os pontos de partida e entrada entes de traçar a rota");
         system("pause");
