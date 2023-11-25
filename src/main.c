@@ -54,6 +54,7 @@ int main (){
         switch(opcao){
 
             case 0:
+                liberarMemoriaGrafo(grafo);
                 exit(0);
                 break;
 

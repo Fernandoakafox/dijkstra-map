@@ -11,7 +11,7 @@
 #define MAX_COLUMNS 8               //numero maximo de colunas do arquivo csv
 
 
-void limparGrafo(struct GRAFO *grafo);
+
 
 
 /***********************************************/
@@ -40,7 +40,7 @@ struct GRAFO* criaGrafo(int vertices){
     grafo->nomes = (char **)malloc(vertices * sizeof(char *)); //array de ponteiros para caracteres/strings
 
     if (!(grafo->visitado && grafo->adjListas && grafo->ant && grafo->dist && grafo->coordenadas)) {
-        limparGrafo(grafo); // Função para liberar a memória alocada
+        liberarMemoriaGrafo(grafo); // Função para liberar a memória alocada
         printf("\n Falha na alocação de memória!");
         return NULL;
     }
@@ -55,9 +55,21 @@ struct GRAFO* criaGrafo(int vertices){
     return grafo;
 }
 
-void limparGrafo(struct GRAFO *grafo) {
+void liberarMemoriaGrafo(struct GRAFO *grafo) {
     if (grafo) {
         free(grafo->visitado);
+        //libera memoria da lista de adjacencias
+        int i;
+        for (i = 0; i < grafo->numVertices; i++) {
+            struct NODO *temp = grafo->adjListas[i];
+            while(temp != NULL){
+                struct NODO *aux = temp;
+                temp = temp->prox;
+                free(aux);
+            }
+            grafo->adjListas[i] = NULL;
+        }
+        // Libera memoria do array de ponteiros adjListas
         free(grafo->adjListas);
         free(grafo->ant);
         free(grafo->dist);

@@ -53,4 +53,5 @@ void importaGrafo(struct GRAFO **grafo);
 void imprimeGrafo(struct GRAFO *grafo);
 void ignorarCabecalhoCSV(FILE *file, char line[]);
 float converterPixelEmMetros(int distanciaEmPixels);
+void liberarMemoriaGrafo(struct GRAFO *grafo);
 #endif // GRAPHTOOLS_H
