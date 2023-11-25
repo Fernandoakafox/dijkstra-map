@@ -5,9 +5,10 @@
 #include <math.h>
 #include <string.h>
 
-#define INFINITO 9999
-#define MAX_LINE_LENGTH 1000 //tamanho maximo das linhas do arquivo csv
-#define MAX_COLUMNS 8 //numero maximo de colunas do arquivo csv
+#define MAX_DISTANCE 999            //A maior distancia entre vertices, em pixels
+#define INFINITO MAX_DISTANCE + 1   //INFINITO sempre sera o valor de MAX_DISTANCE + 1
+#define MAX_LINE_LENGTH 1000        //tamanho maximo das linhas do arquivo csv
+#define MAX_COLUMNS 8               //numero maximo de colunas do arquivo csv
 
 
 void limparGrafo(struct GRAFO *grafo);
@@ -125,42 +126,42 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
     for (i = 0; i < grafo->numVertices; i++) {
         grafo->visitado[i] = 0;
         grafo->ant[i] = 0;
-        grafo->dist[i] = INFINITO;
+        grafo->dist[i] = MAX_DISTANCE; //setamos a distancia de todos elementos com a distancia maxima
     }
 
-    grafo->dist[partida] = 0;     //ponto de partida tem distancia = 0
-    grafo->visitado[partida] = 1; //visita ponto de partida
+    grafo->dist[partida] = 0;     //ponto de partida é setado com distancia = 0
     grafo->ant[partida] = -1;     //ponto de partida não tem antecessor
 
-    struct NODO *temp = grafo->adjListas[partida]; //ponteiro para o primeiro adjacente da lista de adjacencias do vertice de partida
-    int verticeAtual = partida;                    //armazena o indice do vertice de iteração atual
+    int verticeAtual; //armazena o indice do vertice de iteração atual
+    int maisProximo;
 
     //enquanto o vertice de destino não foi visitado
     while(grafo->visitado[destino] != 1){
-        int maisProximo = temp->vertice; //armazena o indice do vertice adjacente mais proximo, é iniciado com o primeiro vertice adjacente
-        int distanciaMaisProximo = temp->distancia; //armazena a distancia do vertice adjacente mais proximo
+
+        int distanciaMaisProximo = INFINITO; //deve ser setada como maior que a distancia inicialmente setada para os elementos do vetor dist[]
+        //Loop percorre lista de visitado e de distancia, em busca do elemento com menor valor. Em outras palavras, busca o vertice, ainda não visitado e mais proximo ao ponto de partida
+        for(i = 0; i < grafo->numVertices; i++){
+            if(grafo->dist[i] < distanciaMaisProximo && grafo->visitado[i] == 0){
+                distanciaMaisProximo = grafo->dist[i]; //armazena a distancia do vertice adjacente mais proximo
+                maisProximo = i; //armazena o indice do vertice adjacente mais proximo
+            }
+        }
+        verticeAtual = maisProximo;        //Vertice de iteração atual é o vertice, ainda não visitado, com a menor distancia até o ponto de partida
+        grafo->visitado[verticeAtual] = 1; //Visita o vertice atual
+
+        struct NODO *temp = grafo->adjListas[verticeAtual];//ponteiro para o primeiro adjacente da lista de adjacencias do vertice de partida
         //o loop abaixo defini a distancia entre vertice de partida e seus adjacentes
-        //enquanto temp apontar para um nodo existente na lista de adjacencias
         while(temp != NULL){
             //se o vertice ainda não foi visitado
             if(grafo->visitado[temp->vertice] == 0){
-                if( (grafo->dist[verticeAtual] + temp->distancia) < grafo->dist[temp->vertice] ){ //se o distancia até chegar neste vertice adjacente for menor que o menor distancia anteriormente definido para chegar neste vertice adjacente
-                    grafo->dist[temp->vertice] = grafo->dist[verticeAtual] + temp->distancia;  //atualiza o distancia para chegar neste vertice
+                if((grafo->dist[verticeAtual] + temp->distancia) < grafo->dist[temp->vertice] ){ //se o tempo até chegar neste vertice adjacente for menor que o menor tempo anteriormente definido para chegar neste vertice adjacente
+                    grafo->dist[temp->vertice] = grafo->dist[verticeAtual] + temp->distancia;  //atualiza o tempo para chegar neste vertice
                     grafo->ant[temp->vertice] = verticeAtual;
-                }
-                if (temp->distancia < distanciaMaisProximo){
-                    maisProximo = temp->vertice;        //atualiza o maisProximo
-                    distanciaMaisProximo = temp->distancia; //atualiza a distancia do mais proximo
                 }
             }
             temp = temp->prox;
         }
-        //visitar o nodo com distancia menor e que ainda não foi visitado, entre os nodos adjacentes
-        grafo->visitado[maisProximo] = 1;
-        verticeAtual = maisProximo; //atualiza o vertice atual
-        temp = grafo->adjListas[maisProximo];
     }
-
     printf("A distancia mais proxima até o vertice de destino é: %i\n", grafo->dist[verticeAtual]);
     int aux = destino;
     struct Pilha *dijkstraRoute = NULL; //Cria um ponteiro para uma estrutura pilha 
