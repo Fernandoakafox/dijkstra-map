@@ -33,7 +33,7 @@ int pontoChegada = -1;
 
 
 // .:| ========= Constantes ========= |:.  
-#define NUM_VERTICES 38
+#define NUM_VERTICES 39
 
 
 
