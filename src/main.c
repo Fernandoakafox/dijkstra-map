@@ -36,10 +36,11 @@ int pontoChegada = -1;
 #define NUM_VERTICES 39
 
 
-
 int main (){
     int opcao;
-    struct GRAFO *grafo = criaGrafo(NUM_VERTICES); //temos vertice 0, logo se o nosso ultimo vertice é o 37, temos no total 38 vertices
+
+     //Temos vertice 0, logo se o nosso ultimo vertice é o 37, temos no total 38 vertices
+    struct GRAFO *grafo = criaGrafo(NUM_VERTICES);
 
 
     // inicializa o Grafo pelo arquivo csv
@@ -47,12 +48,7 @@ int main (){
     imprimeGrafo(grafo);
 
     struct Pilha *dijkstraRoute;
-    // = dijkstra(grafo, 5, 17);
-    //printf("TOPO: %i\n", dijkstraRoute->topo->vertice);
-    
-    //plot_route(&dijkstraRoute, grafo);
-        
-
+   
     while(1){
         printDisplay();
         printMenu();
@@ -155,9 +151,6 @@ void printfOpcoesCores() {
     printf("\n [5] Custom");
 }
 
-
-
-
 // [1] Escolher Ponto de Partida
 void setPontoPartida () {
     int valorValido = 0;
@@ -185,7 +178,7 @@ void setPontoChegada () {
     int entrada;
 
     while (!valorValido){
-        printf("\n Digite o valor do ponto de Partida: ");
+        printf("\n Digite o valor do ponto de chegada: ");
         scanf("%i", &entrada);
         
         if (entrada >= 0 && entrada < NUM_VERTICES){
@@ -282,7 +275,7 @@ void resetarImagem() {
     FILE *fileTemplate = fopen("../images/template.bmp", "rb");
 
     if (fileMapa == NULL || fileTemplate == NULL) {
-        perror("Error opening file");
+        perror("Erro ao abrir arquivo");
         return;
     }
 

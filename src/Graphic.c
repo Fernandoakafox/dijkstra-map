@@ -140,7 +140,6 @@ void plot_line (int x0, int y0, int x1, int y1, int espessura, int red, int gree
 void plot_route(struct Pilha **head, struct GRAFO *grafo){
     int vertice1, vertice2;
     if((*head)->topo != NULL){
-        printf("aqui\n");
         vertice1 = pop(head);
         vertice2 = pop(head);
         plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , red, green, blue);
