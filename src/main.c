@@ -25,7 +25,7 @@ void setPontoChegada();
 void limparPontos();
 void alterarCorDaLinha();
 void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute);
-
+void resetarImagem();
 
 // .:| ========= Globais ========= |:.
 int pontoPartida = -1;
@@ -87,6 +87,9 @@ int main (){
                 tracarRota(grafo, &dijkstraRoute);
                 break;
 
+            case 6:
+                resetarImagem();
+                break;
 
             default:
                 printf("Escolha uma Opção Válida!");
@@ -137,6 +140,7 @@ void printMenu() {
     printf("\n     [3] Resetar pontos de Partida e Chegada ");
     printf("\n     [4] Alterar a cor da Linha ");
     printf("\n     [5] Traçar rota ");
+    printf("\n     [6] Resetar imagem ");
     printf("\n     [0] Sair");
     printf("\n  :| ======================= ==== ======================= |: \n");
 }
@@ -271,5 +275,31 @@ void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute){
         system("pause");
     }
 }
+
+// [6] Resetar Imagem
+void resetarImagem() {
+    FILE *fileMapa = fopen("../images/mapa_unisc.bmp", "wb");
+    FILE *fileTemplate = fopen("../images/template.bmp", "rb");
+
+    if (fileMapa == NULL || fileTemplate == NULL) {
+        perror("Error opening file");
+        return;
+    }
+
+    // Define o tamanho do buffer
+    const size_t bufferSize = 1024; // 1KB
+    char buffer[bufferSize];
+
+    // Leia do arquivo template e escreva no arquivo mapa_unisc em blocos
+    while (!feof(fileTemplate)) {
+        size_t bytesRead = fread(buffer, 1, bufferSize, fileTemplate);
+        fwrite(buffer, 1, bytesRead, fileMapa);
+    }
+
+    // Feche ambos os arquivos
+    fclose(fileMapa);
+    fclose(fileTemplate);
+}
+
 
 
