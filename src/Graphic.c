@@ -190,4 +190,21 @@ void setColorBlue(int newColor) {
     blue = newColor;
 }
 
+// Irá desenhar uma imagem no mapa da unisc
+// X, Y: cordenadas
+// width, height: dimensões da imagem
+void drawImage(const char *png_path, int x, int y) {
+    char command[1024];
 
+    const char *script_path = "./draw_image.py";
+
+    // Construct the command
+    snprintf(command, sizeof(command), "python %s %s %d %d", 
+             script_path, png_path, x, y);
+
+    system(command);
+}
+
+void desenharPino(struct GRAFO *grafo, int pontoPartida) {
+    drawImage("../images/pin.png", grafo->coordenadas[pontoPartida].x-40, grafo->coordenadas[pontoPartida].y-60);
+}

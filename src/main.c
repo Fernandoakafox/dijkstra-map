@@ -257,6 +257,8 @@ void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute){
     if (pontoChegada != -1 && pontoPartida != -1){
         *dijkstraRoute = dijkstra(grafo, pontoPartida, pontoChegada);
         plot_route(&(*dijkstraRoute), grafo);
+
+        desenharPino(grafo, pontoPartida);
     } else {
         printf("\n Você deve escolher os pontos de partida e entrada antes de traçar a rota");
         system("pause");
