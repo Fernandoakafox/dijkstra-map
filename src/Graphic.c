@@ -149,6 +149,8 @@ void plot_route(struct Pilha **head, struct GRAFO *grafo){
         vertice2 = pop(head);
         plot_line(grafo->coordenadas[vertice1].x , grafo->coordenadas[vertice1].y , grafo->coordenadas[vertice2].x , grafo->coordenadas[vertice2].y , 10 , red, green, blue);
     }
+    // Libera espaço de memoria da cabeça da pilha.
+    free(*head);
 }
 
 
