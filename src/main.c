@@ -20,8 +20,8 @@ void setColorBlue();
 void printDisplay();
 void printMenu();
 
-void setPontoPartida();
-void setPontoChegada();
+void setPontoPartida(int vertices);
+void setPontoChegada(int vertices);
 void limparPontos();
 void alterarCorDaLinha();
 void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute);
@@ -32,19 +32,13 @@ int pontoPartida = -1;
 int pontoChegada = -1;
 
 
-// .:| ========= Constantes ========= |:.  
-#define NUM_VERTICES 39
-
-
 int main (){
     int opcao;
 
-     //Temos vertice 0, logo se o nosso ultimo vertice é o 37, temos no total 38 vertices
-    struct GRAFO *grafo = criaGrafo(NUM_VERTICES);
-
+    struct GRAFO *grafo;
 
     // inicializa o Grafo pelo arquivo csv
-    importaGrafo(grafo);
+    importaGrafo(&grafo);
     imprimeGrafo(grafo);
 
     struct Pilha *dijkstraRoute;
@@ -64,11 +58,11 @@ int main (){
                 break;
 
             case 1:
-                setPontoPartida();
+                setPontoPartida(grafo->numVertices);
                 break;
             
             case 2:
-                setPontoChegada();
+                setPontoChegada(grafo->numVertices);
                 break;
 
             case 3:
@@ -152,7 +146,7 @@ void printfOpcoesCores() {
 }
 
 // [1] Escolher Ponto de Partida
-void setPontoPartida () {
+void setPontoPartida (int vertices) {
     int valorValido = 0;
     int entrada;
 
@@ -160,7 +154,7 @@ void setPontoPartida () {
         printf("\n Digite o valor do ponto de Partida: ");
         scanf("%i", &entrada);
         // TODO adicionar validação de pontos existentes e válidos
-        if (entrada >= 0 && entrada < NUM_VERTICES){
+        if (entrada >= 0 && entrada < vertices){
             valorValido = 1;
         } else {
             printf("\n Valor inválido!");
@@ -173,7 +167,7 @@ void setPontoPartida () {
 
 
 // [2] Escolher Ponto de Chegada
-void setPontoChegada () {
+void setPontoChegada (int vertices) {
     int valorValido = 0;
     int entrada;
 
@@ -181,7 +175,7 @@ void setPontoChegada () {
         printf("\n Digite o valor do ponto de chegada: ");
         scanf("%i", &entrada);
         
-        if (entrada >= 0 && entrada < NUM_VERTICES){
+        if (entrada >= 0 && entrada < vertices){
             valorValido = 1;
         } else {
             printf("\n Valor inválido!");
