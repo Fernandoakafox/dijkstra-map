@@ -181,7 +181,7 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
  * entrada :                                                                                  *
  * saída   : vertices, coordenadas dos vertices e lista de adjacencias criadas/atualizadas    *
  **********************************************************************************************/
-void importaGrafo(struct GRAFO *grafo){
+void importaGrafo(struct GRAFO **grafo){
     const char *filename = "../input_data/grafoData.csv";
     //ponteiro para o arquivo no modo read (leitura)
     FILE *file = fopen(filename, "r");
@@ -191,46 +191,70 @@ void importaGrafo(struct GRAFO *grafo){
     }
 
     char line[MAX_LINE_LENGTH];
+
+    // Ignorar a linha de cabeçalho se houver uma
+    ignorarCabecalhoCSV(file, line);
+
+    int vertices = 0;
+    // Itera sobre o arquivo csv, armazenando o numero de linhas como numero de vertices, visto que cada linha representa um vertice
+    while (fgets(line, MAX_LINE_LENGTH, file) != NULL){
+        vertices++;
+    }
+    
+    //cria espaço de memoria para o grafo conforme numero de vertices 
+    *grafo = criaGrafo(vertices);
+
+    // Reposiciona o ponteiro de posição de leitura para o início do arquivo
+    fseek(file, 0, SEEK_SET);
+
     struct DataRecord record; //estrutura record para armazenar valores das colunas
 
     // Ignorar a linha de cabeçalho se houver uma
-    if (fgets(line, MAX_LINE_LENGTH, file) == NULL) {
-        perror("Erro ao ler a linha de cabeçalho do arquivo csv");
-        exit(EXIT_FAILURE);
-    }
+    ignorarCabecalhoCSV(file, line);
 
     // Lê uma linha do arquivo 'file' e armazena os caracteres lidos na variavel 'line', enquanto houver linhas. MAX_LINE_LENGTH define o tamanho maximo da linha
+    //fgets reposiciona automaticamente a posição do ponteiro de leitura para o inicio da proxima linha
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
         //armazena os valores das colunas 1, 2, 3 e 4
         sscanf(line, "%i,%i,%i,%[^,]", &record.vertice, &record.x, &record.y, record.referencia);
-        adicionarVertice(grafo, record.vertice, record.referencia, record.x, record.y); //adiciona o vertice da coluna iterada e seus dados
+        adicionarVertice(*grafo, record.vertice, record.referencia, record.x, record.y); //adiciona o vertice da coluna iterada e seus dados
     }
 
-    // Reposiciona o ponteiro do arquivo para o início
+    // Reposiciona o ponteiro de posição de leitura para o início do arquivo
     fseek(file, 0, SEEK_SET);
 
     // Ignorar a linha de cabeçalho se houver uma
-    if (fgets(line, MAX_LINE_LENGTH, file) == NULL) {
-        perror("Erro ao ler a linha de cabeçalho do arquivo csv");
-        exit(EXIT_FAILURE);
-    }
+    ignorarCabecalhoCSV(file, line);
 
     // Lê uma linha do arquivo 'file' e armazena os caracteres lidos na variavel 'line', enquanto houver linhas. MAX_LINE_LENGTH define o tamanho maximo da linha
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
         //armazena os valores das colunas 5, 6, 7 e 8
         sscanf(line, "%i,%*i,%*i,%*[^,],%i,%i,%i,%i", &record.vertice, &record.adjacente1, &record.adjacente2, &record.adjacente3, &record.adjacente4);
         if(record.adjacente1 != -1)
-            adicionarAresta(grafo, record.vertice, record.adjacente1);
+            adicionarAresta(*grafo, record.vertice, record.adjacente1);
         if(record.adjacente2 != -1)
-            adicionarAresta(grafo, record.vertice, record.adjacente2);
+            adicionarAresta(*grafo, record.vertice, record.adjacente2);
         if(record.adjacente3 != -1)
-            adicionarAresta(grafo, record.vertice, record.adjacente3);
+            adicionarAresta(*grafo, record.vertice, record.adjacente3);
         if(record.adjacente4 != -1)
-            adicionarAresta(grafo, record.vertice, record.adjacente4);
+            adicionarAresta(*grafo, record.vertice, record.adjacente4);
     }
 
     fclose(file);
 }
+
+/*********************************************************************
+ * objetivo: Ignorar a linha de cabeçalho se houver uma              *
+ * entrada : ponteiro para o arquivo file e vetor de caracteres line *
+ * saída   : nenhuma                                                 *
+ *********************************************************************/
+void ignorarCabecalhoCSV(FILE *file, char line[]){
+    if (fgets(line, MAX_LINE_LENGTH, file) == NULL) {
+        perror("Erro ao ler a linha de cabeçalho do arquivo csv");
+        exit(EXIT_FAILURE);
+    }
+}
+
 /************************************************ 
  * mostra    Grafo                              *
  * objetivo: imprimir o grafo                   *
