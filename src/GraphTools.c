@@ -178,7 +178,7 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
 /**********************************************************************************************
  * importaGrafo                                                                               *
  * objetivo: importar vertices, coordenadas dos vertices, e seus adjacentes de um arquivo csv.*
- * entrada :                                                                                  *
+ * entrada : endereço do ponteiro para o grafo                                                *
  * saída   : vertices, coordenadas dos vertices e lista de adjacencias criadas/atualizadas    *
  **********************************************************************************************/
 void importaGrafo(struct GRAFO **grafo){
@@ -273,4 +273,13 @@ void imprimeGrafo(struct GRAFO *grafo){
         }
         printf("\n" );
     }
+}
+/******************************************************************* 
+ * objetivo: converter distancia em pixel para distancia em metros *
+ * entrada : distancia em pixels                                   *
+ * saída   : distancia em metros                                   *
+ *******************************************************************/
+float converterPixelEmMetros(int distanciaEmPixels){
+    float distanciaEmMetros = distanciaEmPixels * 0.57063829787234042553191489361702;
+    return distanciaEmMetros;
 }

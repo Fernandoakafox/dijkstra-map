@@ -17,7 +17,7 @@ void setColorBlue();
 
 
 // .:| ========= Declaração das funções ========= |:.
-void printDisplay();
+void printDisplay(struct GRAFO *grafo);
 void printMenu();
 
 void setPontoPartida(int vertices);
@@ -44,7 +44,7 @@ int main (){
     struct Pilha *dijkstraRoute;
    
     while(1){
-        printDisplay();
+        printDisplay(grafo);
         printMenu();
 
         printf( "\n Opção: " );
@@ -93,7 +93,7 @@ int main (){
 }
 
 
-void printDisplay() {
+void printDisplay(struct GRAFO *grafo) {
     printf("\n| === DISPLAY === |");
 
     // Pontos de Entrada e saída
@@ -109,6 +109,13 @@ void printDisplay() {
          printf("%d", pontoChegada);
     } else {
         printf("Vazio!");
+    }
+
+    printf("\n Distãncia entre os pontos: ");
+    if (grafo->dist[pontoChegada] != 1000 && grafo->dist[pontoChegada] != 0){
+        printf("%.2f metros", converterPixelEmMetros(grafo->dist[pontoChegada]));
+    } else {
+        printf("Aguardando traçar rota!");
     }
 
     printf("\n");

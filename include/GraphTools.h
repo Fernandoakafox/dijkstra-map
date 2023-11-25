@@ -52,4 +52,5 @@ void adicionarVertice(struct GRAFO * grafo, int vertice, char nome[3], int x, in
 void importaGrafo(struct GRAFO **grafo);
 void imprimeGrafo(struct GRAFO *grafo);
 void ignorarCabecalhoCSV(FILE *file, char line[]);
+float converterPixelEmMetros(int distanciaEmPixels);
 #endif // GRAPHTOOLS_H
