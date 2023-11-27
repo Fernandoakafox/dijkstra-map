@@ -173,6 +173,7 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
             }
             temp = temp->prox;
         }
+        free(temp);
     }
     printf("A distancia mais proxima até o vertice de destino é: %i\n", grafo->dist[verticeAtual]);
     int aux = destino;
