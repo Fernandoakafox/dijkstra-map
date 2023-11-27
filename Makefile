@@ -16,11 +16,16 @@ TARGET = $(ODIR)/main
 $(TARGET): $(SRC)
 	$(CC) -o $@ $^ $(CFLAGS)
 
-.PHONY: clean run
+.PHONY: clean run test
 
 # Target to run the program
 run: $(TARGET)
 	cd $(ODIR) && ./main
 
+# Target to compile and run the tests
+test:
+	$(CC) -o $(ODIR)/test $(filter-out $(ODIR)/main.c, $(SRC)) $(ODIR)/Tests.c $(CFLAGS)
+	cd $(ODIR) && ./test
+
 clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ $(ODIR)/test
