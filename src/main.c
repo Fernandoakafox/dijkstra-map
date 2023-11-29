@@ -26,10 +26,36 @@ void limparPontos();
 void alterarCorDaLinha();
 void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute);
 void resetarImagem();
+void blocosDisponiveis();
+
+
+// .:| ======= Structs ========== |:.
+
+// estrutura de um bloco
+struct bloco {
+    char nome[20];
+    int numeroVertice;
+};
+
+// .:| ======= Constantes ========|:.
+#define NUM_BLOCOS 7
+
 
 // .:| ========= Globais ========= |:.
 int pontoPartida = -1;
 int pontoChegada = -1;
+
+
+// Lista de Blocos disponíveis para entrada e saída
+struct bloco listaBlocos[NUM_BLOCOS] = {
+    {"Bloco 17", 5},
+    {"Bloco 18", 1},
+    {"Bloco 19", 40},
+    {"Bloco 53", 26},
+    {"Bloco 52", 24},
+    {"Ônibus", 35},
+    {"Biblioteca", 13}
+};
 
 
 int main (){
@@ -153,16 +179,50 @@ void printfOpcoesCores() {
     printf("\n [5] Custom");
 }
 
+
+// Mostra as opções disponiveis para o usuário escolher como entrada ou saida
+void mostrarBlocosDisponiveis(){
+    int i = 0;
+
+    printf("\n .:| ===== Opções de entrada e saída ===== |:.");
+    for (i = 0; i < NUM_BLOCOS; i++) {
+        if (listaBlocos[i].numeroVertice != pontoChegada && listaBlocos[i].numeroVertice != pontoPartida){
+            printf("\n [%02d] %s", listaBlocos[i].numeroVertice, listaBlocos[i].nome);
+        }
+    }
+}
+
+
+
+int validaBlocoValido(int escolha){
+    int i = 0;
+
+    for (i = 0; i < NUM_BLOCOS; i++) {
+        if (escolha == listaBlocos[i].numeroVertice) {
+            return 1;
+        }
+    }
+
+    // Se passar por todos os blocos e não retornar, chegar nesse ponto
+    // significa que o ponto escolhido não é uma opção de entrada nem de saida
+    return 0;
+}
+
+
+
+// ====== Funções do MENU ================================================= ||
+
 // [1] Escolher Ponto de Partida
 void setPontoPartida (int vertices) {
     int valorValido = 0;
     int entrada;
 
     while (!valorValido){
+        mostrarBlocosDisponiveis();
         printf("\n Digite o valor do ponto de Partida: ");
         scanf("%i", &entrada);
-        // TODO adicionar validação de pontos existentes e válidos
-        if (entrada >= 0 && entrada < vertices){
+
+        if (entrada >= 0 && entrada < vertices && validaBlocoValido(entrada) ){
             valorValido = 1;
         } else {
             printf("\n Valor inválido!");
@@ -180,10 +240,11 @@ void setPontoChegada (int vertices) {
     int entrada;
 
     while (!valorValido){
+        mostrarBlocosDisponiveis();
         printf("\n Digite o valor do ponto de chegada: ");
         scanf("%i", &entrada);
         
-        if (entrada >= 0 && entrada < vertices){
+        if (entrada >= 0 && entrada < vertices && validaBlocoValido(entrada) ){
             valorValido = 1;
         } else {
             printf("\n Valor inválido!");
