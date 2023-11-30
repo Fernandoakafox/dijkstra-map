@@ -27,6 +27,8 @@ void alterarCorDaLinha();
 void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute);
 void resetarImagem();
 void blocosDisponiveis();
+void printNomeBloco(int vertice);
+
 
 
 // .:| ======= Structs ========== |:.
@@ -38,7 +40,7 @@ struct bloco {
 };
 
 // .:| ======= Constantes ========|:.
-#define NUM_BLOCOS 7
+#define NUM_BLOCOS 15
 
 
 // .:| ========= Globais ========= |:.
@@ -47,15 +49,35 @@ int pontoChegada = -1;
 
 
 // Lista de Blocos disponíveis para entrada e saída
-struct bloco listaBlocos[NUM_BLOCOS] = {
+struct bloco listaBlocos[NUM_BLOCOS] = { 
+    {"Bloco 1", 71},
+    {"Bloco 2", 70},
+    {"Bloco 3", 68},
+    {"Bloco 4", 67},
+    {"Bloco 5", 66},
+    
+    {"Bloco 10", 74},
+    {"Bloco 12", 56},
+
     {"Bloco 17", 5},
     {"Bloco 18", 1},
     {"Bloco 19", 40},
+    
     {"Bloco 53", 26},
     {"Bloco 52", 24},
+
     {"Ônibus", 35},
-    {"Biblioteca", 13}
+    {"Biblioteca", 13},
+    {"Tecno Unisc", 42},
 };
+
+// falta adicionar
+// bloco 6
+// bloco 12
+// bloco 13
+// bloco 14
+// bloco 15
+// bloco 16
 
 
 int main (){
@@ -86,37 +108,47 @@ int main (){
 
             case 1:
                 setPontoPartida(grafo->numVertices);
+                getchar();
                 break;
             
             case 2:
                 setPontoChegada(grafo->numVertices);
+                getchar();
                 break;
 
             case 3:
                 limparPontos();
+                getchar();
                 break;
 
             case 4: 
                 alterarCorDaLinha();
+                getchar();
                 break;
 
             case 5:
                 tracarRota(grafo, &dijkstraRoute);
+                getchar();
                 break;
 
             case 6:
                 resetarImagem();
+                getchar();
                 break;
 
             default:
                 printf("Escolha uma Opção Válida!");
+                getchar();
                 break;
         }
+
+        // Limpar o buffer de entrada
+        printf("\n\nPrecione ENTER para continuar");
+        getchar();
 
         printf( "\n" );
         system( "clear" );   // limpar tela
     }
-
 }
 
 
@@ -193,7 +225,7 @@ void mostrarBlocosDisponiveis(){
 }
 
 
-
+// Função para validar se o bloco escolhido é uma opção de entrada ou saída
 int validaBlocoValido(int escolha){
     int i = 0;
 
@@ -317,6 +349,7 @@ void alterarCorDaLinha() {
                 break;
         }
     }
+    printf("\n Cor da Linha alterada com sucesso!");
 }
 
 // [5] Traçar Rota
