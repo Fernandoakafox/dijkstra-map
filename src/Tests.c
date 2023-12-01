@@ -48,7 +48,115 @@ void diskjraTeste1() {
     if (v != -1) erroRota();
 }
 
+void testeRotaOnibusPara18() {
+
+    /** Função de teste para validar a resposta do programa
+    Caso de teste:
+    Realizar um percurso entre o Ponto de Ônibus e o o Bloco 18
+
+    INPUTS :  grafo, pontoDePartida, pontoDeChegada
+    OUTPUTS : o trajeto entre Vertices que significam o melhor trajeto
+
+    Caso o teste não condiza com o caminho correto, irá printar no terminal 
+    Teste Falhou
+    
+    **/
+
+    struct GRAFO* grafo;
+    int vetorAtual;
+
+    importaGrafo(&grafo);
+    struct Pilha* rota = dijkstra(grafo, 35, 1);
+
+    // Rota 35 18 17 15 34 16 50 48 33 38 4 45 44 1 
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 35) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 18) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 17) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 15) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 34) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 16) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 50) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 48) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+    
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 33) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 38) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 4) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 45) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 44) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+
+    vetorAtual = pop(&rota);
+    if (vetorAtual != 1) {
+        printf("\n Teste  Falhou \n\n");
+        return;
+    }
+}
+
 
 int main() {
     diskjraTeste1();
+    testeRotaOnibusPara18();
 }
