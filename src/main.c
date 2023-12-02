@@ -363,7 +363,6 @@ void tracarRota(struct GRAFO * grafo, struct Pilha **dijkstraRoute){
         desenharPino(grafo, pontoPartida);
     } else {
         printf("\n Você deve escolher os pontos de partida e entrada antes de traçar a rota");
-        system("pause");
     }
 }
 
