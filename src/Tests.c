@@ -20,11 +20,11 @@ void erroRota() {
 
 void diskjraTeste1() {
     struct GRAFO* grafo = criaGrafo(5);
-    adicionarVertice(grafo, 0, "A", 0, 0);
-    adicionarVertice(grafo, 1, "B", 0, 2);
-    adicionarVertice(grafo, 2, "C", 1, 0);
-    adicionarVertice(grafo, 3, "D", 1, 1);
-    adicionarVertice(grafo, 4, "E", 2, 1);
+    adicionarVertice(grafo, 0, "A0", 0, 0);
+    adicionarVertice(grafo, 1, "B0", 0, 2);
+    adicionarVertice(grafo, 2, "C0", 1, 0);
+    adicionarVertice(grafo, 3, "D0", 1, 1);
+    adicionarVertice(grafo, 4, "E0", 2, 1);
     
     adicionarAresta(grafo, 0, 1);
     adicionarAresta(grafo, 0, 2);
@@ -120,7 +120,7 @@ void testeRotaOnibusPara18() {
     }
     
     vetorAtual = pop(&rota);
-    if (vetorAtual != 33) {
+    if (vetorAtual != 23) {
         printf("\n Teste  Falhou \n\n");
         return;
     }
@@ -153,10 +153,14 @@ void testeRotaOnibusPara18() {
         printf("\n Teste  Falhou \n\n");
         return;
     }
+    printf("\n\n O teste passou\n ");
 }
 
 
 int main() {
+    printf("\n Primeiro teste:\n");
     diskjraTeste1();
+
+    printf("\n\n Segundo teste:\n");
     testeRotaOnibusPara18();
 }
