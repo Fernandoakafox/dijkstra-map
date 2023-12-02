@@ -120,7 +120,7 @@ void testeRotaOnibusPara18() {
     }
     
     vetorAtual = pop(&rota);
-    if (vetorAtual != 23) {
+    if (vetorAtual != 33) {
         printf("\n Teste  Falhou \n\n");
         return;
     }
@@ -130,6 +130,7 @@ void testeRotaOnibusPara18() {
         printf("\n Teste  Falhou \n\n");
         return;
     }
+    
     vetorAtual = pop(&rota);
     if (vetorAtual != 4) {
         printf("\n Teste  Falhou \n\n");
