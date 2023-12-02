@@ -173,9 +173,8 @@ struct Pilha* dijkstra(struct GRAFO *grafo, int partida, int destino){
             }
             temp = temp->prox;
         }
-        free(temp);
     }
-    printf("A distancia mais proxima até o vertice de destino é: %i\n", grafo->dist[verticeAtual]);
+    
     int aux = destino;
     struct Pilha *dijkstraRoute = NULL; //Cria um ponteiro para uma estrutura pilha 
     inicializaPilha(&dijkstraRoute);    //Esta pilha armazenara o indice dos vertices da rota mais rapida e sera utilizada para plotar os pixels
